@@ -1,0 +1,25 @@
+{
+  "name": "HQV DevContainer",
+  "dockerComposeFile": ["../docker-compose.yml"],
+  "service": "api",
+  "workspaceFolder": "/workspace",
+  "runServices": ["db", "api", "web"],
+  "forwardPorts": [5000, 5173, 5432],
+  "containerEnv": {
+    "ConnectionStrings__Default": "Host=db;Port=5432;Database=app;Username=app;Password=app"
+  },
+  "onCreateCommand": "dotnet restore ./api",
+  "postCreateCommand": "",
+  "shutdownAction": "stopCompose",
+  "postAttachCommand": "bash -lc 'if [ -f api/*.csproj ]; then dotnet --info; fi;'",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-dotnettools.csharp",
+        "ms-azuretools.vscode-docker",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint"
+      ]
+    }
+  }
+}

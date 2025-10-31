@@ -1,0 +1,2 @@
+-- This folder is mounted to /docker-entrypoint-initdb.d
+-- SQL files here run once when the database is first created.

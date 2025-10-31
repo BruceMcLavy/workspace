@@ -1,0 +1,19 @@
+# Node
+node_modules/
+apps/**/dist/
+apps/**/.vite/
+
+# .NET
+**/bin/
+**/obj/
+*.user
+*.suo
+
+# Docker / Devcontainers
+.env
+.vscode/
+.devcontainer/*.log
+**/.DS_Store
+
+# Misc
+*.log

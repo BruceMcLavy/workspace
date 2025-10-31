@@ -1,0 +1,55 @@
+services:
+  db:
+    image: postgres:16
+    container_name: hqv-db
+    env_file: .env      
+    environment:
+      POSTGRES_USER: 
+      POSTGRES_PASSWORD: 
+      POSTGRES_DB: 
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  api:
+    image: mcr.microsoft.com/dotnet/sdk:8.0
+    container_name: hqv-api
+    working_dir: /workspace
+    command: ["bash","-lc","dotnet watch --project api --urls=http://0.0.0.0:5000"]
+    environment:
+      ASPNETCORE_URLS: http://0.0.0.0:5000
+      ASPNETCORE_ENVIRONMENT: Development
+      DOTNET_USE_POLLING_FILE_WATCHER: "1"
+      ConnectionStrings__Default: "Host=db;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
+    volumes:
+      - ./:/workspace:cached
+    ports:
+      - "5000:5000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  web:
+    image: node:20-bullseye
+    container_name: hqv-web
+    working_dir: /workspace/apps/web
+    environment:
+      CHOKIDAR_USEPOLLING: "true"   # reliable file watching on Windows/WSL
+    command: ["bash", "-lc", "if [ ! -d node_modules ]; then npm ci || npm install; fi && npm run dev -- --host"]
+    volumes:
+      - ./:/workspace:cached
+    ports:
+      - "5173:5173"
+    depends_on:
+      - api
+
+
+volumes:
+  pgdata:
