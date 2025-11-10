@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Box } from "@mui/material"
 
 type Note = { id: number; text: string };
 
@@ -35,14 +36,14 @@ export default function App() {
       <p>API health status: <b>{health}</b></p>
 
       <h2>Notes</h2>
-      <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
+      <Box style={{ display: "flex", gap: 8, marginBottom: 12 }}>
         <input
           value={text}
           onChange={e => setText(e.target.value)}
           placeholder="New note..."
         />
-        <button onClick={addNote}>Add</button>
-      </div>
+        <button onClick={addNote}>Add Note</button>
+      </Box>
 
       <ul>
         {notes.map(n => <li key={n.id}>{n.text}</li>)}

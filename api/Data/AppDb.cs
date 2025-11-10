@@ -13,5 +13,10 @@ public class AppDb(DbContextOptions<AppDb> opts) : DbContext(opts)
         modelBuilder.Entity<Note>()
             .Property(n => n.CreatedAt)
             .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+        modelBuilder.Entity<Note>()
+            .Property(n => n.PublicId)
+            .HasColumnType("uuid")
+            .HasDefaultValueSql("gen_random_uuid()");
     }
 }

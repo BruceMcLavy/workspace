@@ -34,12 +34,13 @@ app.MapGet("/api/health", () => Results.Ok(new { status = "ok" }));
 
 app.MapGet("/api/notes", async (AppDb db) =>
 {
-    Console.WriteLine("Retrieving Notes");
+    Console.WriteLine("Retrieving Hot Reload Notes");
     return await db.Notes.OrderBy(n => n.Id).ToListAsync();
 });
 
 app.MapPost("/api/notes", async (AppDb db, Note note) =>
 {
+    Console.WriteLine("Creating A NEW Note");
     db.Notes.Add(note);
     await db.SaveChangesAsync();
     return Results.Created($"/api/notes/{note.Id}", note);

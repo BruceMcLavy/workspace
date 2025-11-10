@@ -1,7 +1,7 @@
 services:
   db:
     image: postgres:16
-    container_name: hqv-db
+    container_name: hq5-db
     env_file: .env      
     ports:
       - "5432:5432"
@@ -16,9 +16,9 @@ services:
 
   api:
     image: mcr.microsoft.com/dotnet/sdk:8.0
-    container_name: hqv-api
+    container_name: hq5-api
     working_dir: /workspace
-    command: ["bash","-lc","dotnet watch --project api --urls=http://0.0.0.0:5000"]
+    command: ["bash","-lc","dotnet watch run --project api --urls=http://0.0.0.0:5000"]
     environment:
       ASPNETCORE_URLS: http://0.0.0.0:5000
       ASPNETCORE_ENVIRONMENT: Development
@@ -34,7 +34,7 @@ services:
 
   web:
     image: node:20-bullseye
-    container_name: hqv-web
+    container_name: hq5-web
     working_dir: /workspace/apps/web
     environment:
       CHOKIDAR_USEPOLLING: "true"   # reliable file watching on Windows/WSL
