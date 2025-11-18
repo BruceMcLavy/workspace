@@ -17,3 +17,9 @@ apps/**/.vite/
 
 # Misc
 *.log
+
+# Ignore everything inside AppData
+AppData/*
+
+# …except .gitkeep so the folder remains in the repo
+!AppData/.gitkeep

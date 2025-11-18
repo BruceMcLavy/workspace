@@ -46,6 +46,15 @@ services:
     depends_on:
       - api
 
+  txbackend:
+    build:
+      context: ./infra/tx-backend
+      dockerfile: Dockerfile
+    container_name: tx-backend
+    ports:
+      - "5500:4283"  # host:container
+
+
 
 volumes:
   pgdata:

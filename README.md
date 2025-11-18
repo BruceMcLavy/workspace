@@ -1,4 +1,4 @@
-# HQV
+# HQ5
 
 Dev Container + Docker Compose skeleton
 
@@ -16,6 +16,6 @@ Stack:
 3. Open this folder in VS Code ? **Reopen in Container**.
 
 Containers:
-- hqv-db
-- hqv-api
-- hqv-web
+- hq5-db
+- hq5-api
+- hq5-web

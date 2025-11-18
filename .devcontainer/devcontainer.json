@@ -1,5 +1,5 @@
 {
-  "name": "HQV DevContainer",
+  "name": "HQ5 DevContainer",
   "dockerComposeFile": [
     "../docker-compose.yml",
   ],
